@@ -1,25 +1,26 @@
-
 import React, {useState} from 'react'
 
 const Employee = () => {
     const[name,setName]=useState("")
     const[role,setRole]=useState("")
     const[email,setEmail]=useState("")
-    const[department,setDepartment]=useState("")    
+    const[dept,setDept]=useState("")    
     
-    const empDetails={name,role,email,department}
+    const empDetails={name,role,email,dept}
 
     const empHandler=async(e)=>{
         e.preventDefault()
         console.log(empDetails)
         try{
-            const response= await fetch("https://jsonplaceholder.typicode.com/posts",{
-                method:"Post",
-                heders:{
+            const response= await fetch("http://localhost:5000/api/emp/add-emp",{
+                method:"POST",
+                headers:{
                     "Content-type":"Application/json"
                 },
-                body:Json.stringify(empDetails)
+                body:JSON.stringify(empDetails)
             })
+            const data = await response.json();
+            console.log(data);
             alert("Data posted successfully")
         }catch(error){
             console.log(error)
@@ -31,15 +32,15 @@ const Employee = () => {
   return (
     <div className='empForm'>
         <div className='section'>
-            <form onsubmit={empHandler}>
+            <form onSubmit={empHandler}>
                 <label>Employee Name</label><br/>
-                <input type="text" onChange={(e)=>setName(e.target.value)}/><br/>
+                <input type="text" name='name' onChange={(e)=>setName(e.target.value)}/><br/>
                 <label>Employee Role</label><br/>
-                <input type="text" onChange={(e)=>setRole(e.target.value)}/><br/>
+                <input type="text" name='role' onChange={(e)=>setRole(e.target.value)}/><br/>
                 <label>Employee Email</label><br/>
-                <input type="text" onChange={(e)=>setEmail(e.target.value)}/><br/>
+                <input type="text" name='email' onChange={(e)=>setEmail(e.target.value)}/><br/>
                 <label>Employee Department</label><br/>
-                <input type="text" onChange={(e)=>setDepartment(e.target.value)}/><br/>
+                <input type="text" name='dept' onChange={(e)=>setDept(e.target.value)}/><br/>
 <button type="submit">Submit</button>
             </form>
         </div>
